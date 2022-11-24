@@ -4,7 +4,6 @@ import com.SpringBootReactive.MongoDB.React.Products.dto.ProductDto;
 import com.SpringBootReactive.MongoDB.React.Products.entity.Product;
 import com.SpringBootReactive.MongoDB.React.Products.util.AppUtils;
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.mongodb.core.ReactiveMongoTemplate;
 import org.springframework.stereotype.Component;
 import reactor.core.publisher.Flux;

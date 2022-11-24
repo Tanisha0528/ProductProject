@@ -21,6 +21,8 @@ public class ProductDto {
     private double price;
     private List<Integer> listOfPinCodes;
 
-
-
+    public ProductDto(String name, String category) {
+        this.name = name;
+        this.category = category;
+    }
 }
