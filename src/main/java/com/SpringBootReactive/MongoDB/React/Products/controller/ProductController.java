@@ -1,8 +1,6 @@
 package com.SpringBootReactive.MongoDB.React.Products.controller;
 
 import com.SpringBootReactive.MongoDB.React.Products.dto.ProductDto;
-import com.SpringBootReactive.MongoDB.React.Products.dto.ProductDtoFromReactInput;
-import com.SpringBootReactive.MongoDB.React.Products.exception.ProductAPIException;
 import com.SpringBootReactive.MongoDB.React.Products.exception.ProductNotFoundExcpetion;
 import com.SpringBootReactive.MongoDB.React.Products.service.ProductService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -11,7 +9,6 @@ import org.springframework.web.bind.annotation.*;
 import reactor.core.publisher.Flux;
 import reactor.core.publisher.Mono;
 
-import java.util.ArrayList;
 import java.util.List;
 import java.util.Map;
 
@@ -67,27 +64,8 @@ public class ProductController {
     }
 
     @PostMapping("/saveProduct")
-    public Mono<ResponseEntity<ProductDto>> saveProduct(@RequestBody ProductDtoFromReactInput productDtoFromReactInput)
+    public Mono<ResponseEntity<ProductDto>> saveProduct(@RequestBody ProductDto productDto)
     {
-        ProductDto productDto=new ProductDto();
-        productDto.setName(productDtoFromReactInput.getName());
-        productDto.setCategory(productDtoFromReactInput.getCategory());
-        productDto.setQty(Integer.parseInt(productDtoFromReactInput.getQty()));
-        productDto.setPrice(Double.parseDouble(productDtoFromReactInput.getPrice()));
-        /*
-        String[] stringArray = productDtoFromReactInput.getListOfPinCodes().split(",");
-        List<Integer> convertToList = new ArrayList<Integer>();
-        for (String pincode : stringArray) {
-            convertToList.add(Integer.parseInt(pincode.trim()));
-        }
-        productDto.setListOfPinCodes(convertToList);*/
-        List<Integer> pincodeList=new ArrayList<>();
-        List<String> listofStringPincodes=productDtoFromReactInput.getListOfPinCodes();
-        for(String s: listofStringPincodes)
-        {
-            pincodeList.add(Integer.parseInt(s));
-        }
-        productDto.setListOfPinCodes(pincodeList);
         return service.saveProduct(productDto);
     } @PostMapping("/saveAll")
     public Flux<ProductDto> saveAllProduct(@RequestBody List<ProductDto> productDto)
@@ -96,9 +74,9 @@ public class ProductController {
         return service.saveAll(productDto);
     }
     @PutMapping("/updateProduct/{id}")
-    public Mono<ResponseEntity> updateProductById(@RequestBody ProductDtoFromReactInput productDtoFromReactInput,@PathVariable("id") String id)
+    public Mono<ResponseEntity> updateProductById(@RequestBody ProductDto productDto,@PathVariable("id") String id)
     {
-        ProductDto productDto=new ProductDto();
+       /* ProductDto productDto=new ProductDto();
         productDto.setName(productDtoFromReactInput.getName());
         productDto.setCategory(productDtoFromReactInput.getCategory());
         productDto.setQty(Integer.parseInt(productDtoFromReactInput.getQty()));
@@ -109,7 +87,7 @@ public class ProductController {
         {
             pincodeList.add(Integer.parseInt(s));
         }
-        productDto.setListOfPinCodes(pincodeList);
+        productDto.setListOfPinCodes(pincodeList);*/
         Mono<ProductDto> productDtoMono=Mono.just(productDto);
         return service.updateProductById(productDtoMono,id);
     }
